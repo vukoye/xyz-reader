@@ -9,5 +9,6 @@
 
     <string name="up">Up</string>
     <string name="no_network">No Network Available</string>
+    <string name="subtitle">by %s</string>
 
 </resources>
