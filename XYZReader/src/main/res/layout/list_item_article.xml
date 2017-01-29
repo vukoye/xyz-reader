@@ -27,7 +27,6 @@
             android:paddingTop="@dimen/list_item_title_top_padding"
             android:paddingRight="@dimen/list_item_title_right_padding"
             android:paddingBottom="@dimen/list_item_title_bottom_padding"
-            android:textColor="@color/gray_700"
             android:ellipsize="end"
             android:maxLines="4" />
 
@@ -39,7 +38,6 @@
             android:paddingLeft="@dimen/list_item_title_left_padding"
             android:paddingRight="@dimen/list_item_title_right_padding"
             android:paddingBottom="@dimen/list_item_title_bottom_padding"
-            android:textColor="@color/gray_300"
             android:maxLines="1"
             android:singleLine="true"
             android:ellipsize="end" />
