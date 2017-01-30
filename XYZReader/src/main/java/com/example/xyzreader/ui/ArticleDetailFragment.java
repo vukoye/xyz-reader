@@ -77,9 +77,6 @@ public class ArticleDetailFragment extends Fragment implements
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout mCollapsingToolbar;
 
-    @BindView(R.id.draw_insets_frame_layout)
-    DrawInsetsFrameLayout mDrawInsetsFrameLayout;
-
     private ColorDrawable mStatusBarColorDrawable;
 
     private int mTopInset;
@@ -92,7 +89,6 @@ public class ArticleDetailFragment extends Fragment implements
     private int mScrollY;
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
-
 
 
     /**
@@ -145,24 +141,6 @@ public class ArticleDetailFragment extends Fragment implements
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
         mUnbinder = ButterKnife.bind(this, mRootView);
 
-        mDrawInsetsFrameLayout.setOnInsetsCallback(new DrawInsetsFrameLayout.OnInsetsCallback() {
-            @Override
-            public void onInsetsChanged(Rect insets) {
-                mTopInset = insets.top;
-            }
-        });
-
-//        mScrollView.setCallbacks(new ObservableScrollView.Callbacks() {
-//            @Override
-//            public void onScrollChanged() {
-//                mScrollY = mScrollView.getScrollY();
-//                getActivityCast().onUpButtonFloorChanged(mItemId, ArticleDetailFragment.this);
-//                mPhotoContainerView.setTranslationY((int) (mScrollY - mScrollY / PARALLAX_FACTOR));
-//                updateStatusBar();
-//            }
-//        });
-
-
         mStatusBarColorDrawable = new ColorDrawable(0);
 
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -192,7 +170,6 @@ public class ArticleDetailFragment extends Fragment implements
                     (int) (Color.blue(mMutedColor) * 0.9));
         }
         mStatusBarColorDrawable.setColor(color);
-        mDrawInsetsFrameLayout.setInsetBackground(mStatusBarColorDrawable);
     }
 
     static float progress(float v, float min, float max) {
@@ -213,10 +190,6 @@ public class ArticleDetailFragment extends Fragment implements
         if (mRootView == null) {
             return;
         }
-
-        //bylineView.setMovementMethod(new LinkMovementMethod());
-
-        //mBodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
 
         if (mCursor != null) {
 
@@ -249,10 +222,9 @@ public class ArticleDetailFragment extends Fragment implements
                             if (bitmap != null) {
                                 Palette p = Palette.generate(bitmap, 12);
                                 mMutedColor = p.getDarkMutedColor(0xFF333333);
-
-                                mCollapsingToolbar.setContentScrimColor(mMutedColor);
-                                mCollapsingToolbar.setStatusBarScrimColor(mMutedColor);
-
+                                if (mCollapsingToolbar != null) {
+                                    mCollapsingToolbar.setContentScrimColor(mMutedColor);
+                                }
                                 mPhotoView.setImageBitmap(imageContainer.getBitmap());
                                 mRootView.findViewById(R.id.meta_bar)
                                         .setBackgroundColor(mMutedColor);
@@ -267,9 +239,15 @@ public class ArticleDetailFragment extends Fragment implements
                     });
         } else {
             mRootView.setVisibility(View.GONE);
-            mTitleView.setText("N/A");
-            mBylineView.setText("N/A" );
-            mBodyView.setText("N/A");
+            if (mTitleView != null) {
+                mTitleView.setText("N/A");
+            }
+            if (mBylineView != null) {
+                mBylineView.setText("N/A");
+            }
+            if (mBodyView != null) {
+                mBodyView.setText("N/A");
+            }
         }
     }
 
